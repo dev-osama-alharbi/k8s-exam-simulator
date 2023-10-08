@@ -1,0 +1,149 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>sa.osama_alharbi.k8s_exam_simulator</groupId>
+  <artifactId>k8s-exam-simulator</artifactId>
+  <version>0.0.1</version>
+<!--  <packaging>jar</packaging>-->
+  <packaging>jar</packaging>
+
+
+  <name>k8s-exam-simulator Maven Plugin</name>
+  <description>Demo project for Spring Boot</description>
+
+  <!-- FIXME change it to the project's website -->
+  <url>http://osama-alharbi.sa</url>
+
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>17</java.version>
+    <start-class>sa.osama_alharbi.k8s_exam_simulator.Main</start-class>
+    <javafx-version>17.0.2</javafx-version>
+  </properties>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.1.4</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
+  <repositories>
+    <repository>
+      <id>mdfx</id>
+      <url>https://sandec.jfrog.io/artifactory/repo</url>
+    </repository>
+
+  </repositories>
+
+  <dependencies>
+    <!-- JAVAFX -->
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-web</artifactId>
+      <version>${javafx-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>${javafx-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-swing</artifactId>
+      <version>${javafx-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.jensd</groupId>
+      <artifactId>fontawesomefx-commons</artifactId>
+      <version>9.1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>de.jensd</groupId>
+      <artifactId>fontawesomefx-controls</artifactId>
+      <version>9.1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>de.jensd</groupId>
+      <artifactId>fontawesomefx-fontawesome</artifactId>
+      <version>4.7.0-9.1.2</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.kubernetes</groupId>
+      <artifactId>client-java</artifactId>
+      <version>15.0.1</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>app</finalName>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.9.0</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>3.3.1</version>
+        <configuration>
+          <container>
+            <jvmFlags>
+              <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
+            </jvmFlags>
+          </container>
+          <from>
+            <image>docker.io/arm64v8/openjdk:17-jdk@sha256:2fd12c42c12bf707f7ac0f5fa630ff9c59868dfc4428daaf34df9d82a0c5b101</image>
+          </from>
+          <to>
+            <image>docker.io/osam0/k8s-exam-simulator</image>
+          </to>
+        </configuration>
+      </plugin>
+    </plugins>
+
+  </build>
+  <profiles>
+    <profile>
+      <id>sync</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-devtools</artifactId>
+          <!-- <optional>true</optional> not required -->
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+
+</project>

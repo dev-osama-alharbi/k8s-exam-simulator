@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark"/>
+    <title>Markdown themes gallery</title>
+    <script>
+        // importent dont delete it
+        let process = {}
+        process.env = {}
+        process.env.NODE_ENV = 'production'
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css" /> <!-- highlight code css -->
+
+
+    <link rel="stylesheet"  th:href="@{/css/dark.css}"/><!-- github markdown css  -->
+
+    <script src="https://unpkg.com/bytemd"></script> <!-- bytemd markdown view lib-->
+    <script src="https://unpkg.com/@bytemd/plugin-gfm"></script> <!-- bytemd markdown view lib Plugin-->
+    <script src="https://unpkg.com/@bytemd/plugin-highlight"></script> <!-- bytemd markdown view lib highlight Plugin-->
+    <style>
+        #app {
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+        .bytemd {
+            height: calc(100vh - 40px);
+        }
+    </style>
+</head>
+
+<body style="background-color: #0D1117;">
+<div id="app"></div>
+<script>
+        var decodeEntities = (function() {
+  // this prevents any overhead from creating the object each time
+  var element = document.createElement('div');
+
+  function decodeHTMLEntities (str) {
+    if(str && typeof str === 'string') {
+      // strip script/html tags
+      str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+      str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+      element.innerHTML = str;
+      str = element.textContent;
+      element.textContent = '';
+    }
+
+    return str;
+  }
+
+  return decodeHTMLEntities;
+})();
+        const md = decodeEntities("[[${name}]]");
+        new bytemd.Viewer({
+            target: document.querySelector('#app'),
+            props: {
+                value: md,
+                plugins: [
+
+                    bytemdPluginGfm(),
+                    bytemdPluginHighlight(),
+
+                ]
+            },
+
+
+
+        })
+    </script>
+</body>
+</html>

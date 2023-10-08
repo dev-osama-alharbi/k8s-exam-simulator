@@ -1,0 +1,106 @@
+// pane
+.main{
+    -fx-background-color: #1A1C28;
+}
+
+// button
+.btn-main{
+    -fx-background-color: #FFA631;
+}
+.btn-logout{
+    -fx-background-color: #EE3333;
+    -fx-background-radius: 0 0 0 30;
+}
+.btn-radius{
+    -fx-background-radius: 0 25 25 0;
+}
+.btn-radius-all{
+    -fx-background-radius: 25;
+}
+.btn-radius-left-bottom{
+    -fx-background-radius: 0 0 0 25;
+}
+.btn-radius-right-bottom{
+    -fx-background-radius: 0 0 25 0;
+}
+
+// separator
+.separator {
+}
+.separator .line {
+    -fx-border-color: #5E636E;
+    -fx-border-width: 1px;
+}
+
+// label
+.lbl-main{
+    -fx-text-fill: #FFFFFF;
+}
+.lbl-btn{
+    -fx-text-fill: #FFFFFF;
+//    -fx-font-family: System;
+//    -fx-font-size: 22px;
+//    -fx-font-style: bold;
+}
+
+.combo-box .list-cell{
+    -fx-font-size: 22px;
+    -fx-text-fill: #FFFFFF;
+}
+// input
+.input-main{
+    -fx-background-color: #4A4C48;
+    -fx-text-fill: #DADCD8;
+}
+
+// icon
+.icon-main{
+    //-fx-fill: #757575;
+    -fx-fill: #555555;
+    -glyph-size: 28;
+}
+.icon-list{
+    -glyph-name: LIST;
+}
+.icon-md{
+    -glyph-name: CODE;
+}
+.icon-logout{
+    -fx-fill: #FFFFFF;
+    -glyph-size: 28;
+}
+.icon-wrong{
+    -fx-fill: #C0423A;
+    -glyph-size: 42;
+    -glyph-name: TIMES_CIRCLE;
+}
+.icon-correct{
+    -fx-fill: #31A05E;
+    -glyph-size: 42;
+    -glyph-name: CHECK_CIRCLE;
+}
+.icon-clock{
+    -fx-fill: #000000;
+    -glyph-size: 42;
+    -glyph-name: CLOCK_ALT;
+}
+
+// listview
+.list-view {
+    -fx-background-radius: 25 25 0 0;
+    -fx-background-color: #1A1C28;
+    -fx-padding: 10 10 0 10;
+    -fx-selection-bar:green ;
+}
+.list-view .list-cell:filled:first {
+    -fx-background-radius: 25 25 0 0;
+}
+.list-view .list-cell:filled:selected {
+    -fx-background-color: #6A6C68;
+}
+.list-view .list-cell:odd {
+    -fx-background-color: #1A1C28;
+}
+.list-view .list-cell:even {
+    -fx-background-color: #1A1C28;;
+}
