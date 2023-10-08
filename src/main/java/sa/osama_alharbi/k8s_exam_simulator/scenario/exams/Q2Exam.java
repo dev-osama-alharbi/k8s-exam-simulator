@@ -18,15 +18,14 @@ import java.util.Map;
 public class Q2Exam extends Exam {
     public Q2Exam() {
         super(new ScenarioModel());
-        scenario_id = "pod";
+        scenario_id = "job";
 
         title = "job";
 
-        namespace = K8sConstant.NAMESPACE_PREFIX+"ab1";
-        String jobName = "ab1-new-job";
-        String imageName = "busybox:1.31.0";
-        String containerName = "ab1-new-job-container";
-        String execute = "sleep 2 && echo done";
+        namespace = K8sConstant.NAMESPACE_PREFIX+"job";
+        String jobName = "new-job";
+        String imageName = "busybox:1.36.1";
+        String containerName = "new-job-container";
         List<String> commands = new ArrayList<>();
         commands.add("sh");
         commands.add("-c");
@@ -37,27 +36,23 @@ public class Q2Exam extends Exam {
         labels.put("id","awesome-job");
 
         scenario.getQuestionModel().setTitle("job");
-        scenario.getQuestionModel().setQuestion("Team ab1 needs a Job. This Job should run image "+imageName+" and execute "+execute+" . It should be in namespace "+namespace+" , run a completeCount of "+completeCount+" times and should execute "+parallelCount+" runs in parallel.\n" +
-                "\n" +
-                "Start the Job and check its history. Each pod created by the Job should have the label "+labels.entrySet().stream().map(ent -> ent.getKey()+": "+ent.getValue()+", ")+". The job should be named "+jobName+" and the container "+containerName+" .");
 
         //namespace
-        CheckSolutionIntr checkSolutionIntr_1 = new CheckSolutionIntr(1,"namespace") {
+        scenario.getSolutionModel().getCheckSolutionList().add(new CheckSolutionIntr(1,"namespace") {
             @Override
             public boolean run() {
                 CoreV1Api api = new CoreV1Api();
                 try {
                     V1Namespace v1namespace = api.readNamespace(namespace,null);
-                    return true;
+                    return v1namespace != null;
                 } catch (ApiException e) {
                     return false;
                 }
             }
-        };
-        scenario.getSolutionModel().getCheckSolutionList().add(checkSolutionIntr_1);
+        });
 
         //image
-        CheckSolutionIntr checkSolutionIntr_2 = new CheckSolutionIntr(2,"image") {
+        scenario.getSolutionModel().getCheckSolutionList().add(new CheckSolutionIntr(2,"image") {
             @Override
             public boolean run() {
                 BatchV1Api api = new BatchV1Api();
@@ -68,27 +63,27 @@ public class Q2Exam extends Exam {
                     return false;
                 }
             }
-        };
-        scenario.getSolutionModel().getCheckSolutionList().add(checkSolutionIntr_2);
+        });
 
         //execute
-        CheckSolutionIntr checkSolutionIntr_3 = new CheckSolutionIntr(3,"command") {
+        scenario.getSolutionModel().getCheckSolutionList().add(new CheckSolutionIntr(3,"command") {
             @Override
             public boolean run() {
                 BatchV1Api api = new BatchV1Api();
-                try {
-                    V1Job v1Job = api.readNamespacedJob(jobName,namespace,null);
-                    System.out.println("v1Job command => "+v1Job.getSpec().getTemplate().getSpec().getContainers().get(0).getCommand());
-                    return v1Job.getSpec().getTemplate().getSpec().getContainers().get(0).getCommand().get(0).equals(imageName);
-                } catch (Exception e) {
-                    return false;
-                }
+                //TODO check command
+//                try {
+//                    V1Job v1Job = api.readNamespacedJob(jobName,namespace,null);
+//                    System.out.println("v1Job command => "+v1Job.getSpec().getTemplate().getSpec().getContainers().get(0).getCommand());
+//                    return v1Job.getSpec().getTemplate().getSpec().getContainers().get(0).getCommand().get(0).equals(imageName);
+//                } catch (Exception e) {
+//                    return false;
+//                }
+                return false;
             }
-        };
-        scenario.getSolutionModel().getCheckSolutionList().add(checkSolutionIntr_3);
+        });
 
         //completeCount
-        CheckSolutionIntr checkSolutionIntr_4 = new CheckSolutionIntr(4,"completeCount") {
+        scenario.getSolutionModel().getCheckSolutionList().add(new CheckSolutionIntr(4,"completeCount") {
             @Override
             public boolean run() {
                 BatchV1Api api = new BatchV1Api();
@@ -99,11 +94,10 @@ public class Q2Exam extends Exam {
                     return false;
                 }
             }
-        };
-        scenario.getSolutionModel().getCheckSolutionList().add(checkSolutionIntr_4);
+        });
 
         //parallelCount
-        CheckSolutionIntr checkSolutionIntr_5 = new CheckSolutionIntr(5,"parallelCount") {
+        scenario.getSolutionModel().getCheckSolutionList().add(new CheckSolutionIntr(5,"parallelCount") {
             @Override
             public boolean run() {
                 BatchV1Api api = new BatchV1Api();
@@ -114,11 +108,10 @@ public class Q2Exam extends Exam {
                     return false;
                 }
             }
-        };
-        scenario.getSolutionModel().getCheckSolutionList().add(checkSolutionIntr_5);
+        });
 
         //label
-        CheckSolutionIntr checkSolutionIntr_6 = new CheckSolutionIntr(6,"labels") {
+        scenario.getSolutionModel().getCheckSolutionList().add(new CheckSolutionIntr(6,"labels") {
             @Override
             public boolean run() {
                 BatchV1Api api = new BatchV1Api();
@@ -126,27 +119,22 @@ public class Q2Exam extends Exam {
                     V1Job v1Job = api.readNamespacedJob(jobName,namespace,null);
                     boolean flag = true;
                     Map<String, String> jobLabels = v1Job.getSpec().getTemplate().getMetadata().getLabels();
-//                    labels.entrySet().forEach(ent -> {
-//                        if(!jobLabels.containsKey(ent.getKey()))
-//                            flag = false;
-//                    });
                     for (Map.Entry<String, String> ent:labels.entrySet())
                         if(!jobLabels.containsKey(ent.getKey()))
                             flag = false;
                         else
-                            if(!jobLabels.get(ent.getKey()).equals(ent.getValue()))
-                                flag = false;
+                        if(!jobLabels.get(ent.getKey()).equals(ent.getValue()))
+                            flag = false;
 
                     return flag;
                 } catch (Exception e) {
                     return false;
                 }
             }
-        };
-        scenario.getSolutionModel().getCheckSolutionList().add(checkSolutionIntr_6);
+        });
 
         //jobName
-        CheckSolutionIntr checkSolutionIntr_7 = new CheckSolutionIntr(7,"jobName") {
+        scenario.getSolutionModel().getCheckSolutionList().add(new CheckSolutionIntr(7,"jobName") {
             @Override
             public boolean run() {
                 BatchV1Api api = new BatchV1Api();
@@ -159,11 +147,10 @@ public class Q2Exam extends Exam {
                     return false;
                 }
             }
-        };
-        scenario.getSolutionModel().getCheckSolutionList().add(checkSolutionIntr_7);
+        });
 
         //containerName
-        CheckSolutionIntr checkSolutionIntr_8 = new CheckSolutionIntr(8,"containerName") {
+        scenario.getSolutionModel().getCheckSolutionList().add(new CheckSolutionIntr(8,"containerName") {
             @Override
             public boolean run() {
                 BatchV1Api api = new BatchV1Api();
@@ -176,8 +163,7 @@ public class Q2Exam extends Exam {
                     return false;
                 }
             }
-        };
-        scenario.getSolutionModel().getCheckSolutionList().add(checkSolutionIntr_8);
+        });
 
     }
 }
