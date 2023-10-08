@@ -12,6 +12,7 @@ public class K8sScenarios {
         lst.add(new Q1Exam());
         lst.add(new Q2Exam());
         lst.add(new Q3Exam());
+        lst.add(new Q4Exam());
         return lst;
     }
 }
