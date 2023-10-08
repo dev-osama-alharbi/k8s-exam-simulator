@@ -1,8 +1,6 @@
 package sa.osama_alharbi.k8s_exam_simulator.constant;
 
-import sa.osama_alharbi.k8s_exam_simulator.scenario.exams.Exam;
-import sa.osama_alharbi.k8s_exam_simulator.scenario.exams.Q1Exam;
-import sa.osama_alharbi.k8s_exam_simulator.scenario.exams.Q2Exam;
+import sa.osama_alharbi.k8s_exam_simulator.scenario.exams.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +11,7 @@ public class K8sScenarios {
         List<Exam> lst = new ArrayList<>();
         lst.add(new Q1Exam());
         lst.add(new Q2Exam());
+        lst.add(new Q3Exam());
         return lst;
     }
 }
