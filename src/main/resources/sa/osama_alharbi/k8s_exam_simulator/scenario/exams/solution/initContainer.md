@@ -13,7 +13,7 @@ metadata:
   labels:
     app: my-website
   name: my-website
-  namespace: abc
+  namespace: ::namespace::
 spec:
   replicas: 1
   selector:
