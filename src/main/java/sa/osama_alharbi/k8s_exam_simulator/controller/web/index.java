@@ -18,7 +18,7 @@ public class index {
 
     @GetMapping("/exam/question/{namespace}/{id}")
     public String question(Model model, @PathVariable("id") String id, @PathVariable("namespace") String namespace) throws IOException {
-        String data = new String(IndexExam.class.getResourceAsStream(id+"-q.md").readAllBytes(), StandardCharsets.UTF_8);
+        String data = new String(IndexExam.class.getResourceAsStream("question/"+id+".md").readAllBytes(), StandardCharsets.UTF_8);
         data = data.replaceAll(System.getProperty("line.separator"),"\\\\n")
                 .replaceAll("\\n", "\\\\n")
                 .replaceAll("\"", "\\\"")
@@ -30,7 +30,7 @@ public class index {
 
     @GetMapping("/exam/solution/{namespace}/{id}")
     public String solution(Model model, @PathVariable("id") String id, @PathVariable("namespace") String namespace) throws IOException {
-        String data = new String(IndexExam.class.getResourceAsStream(id+"-s.md").readAllBytes(), StandardCharsets.UTF_8);
+        String data = new String(IndexExam.class.getResourceAsStream("solution/"+id+".md").readAllBytes(), StandardCharsets.UTF_8);
         data = data.replaceAll(System.getProperty("line.separator"),"\\\\n")
                 .replaceAll("\\n", "\\\\n")
                 .replaceAll("\"", "\\\"")

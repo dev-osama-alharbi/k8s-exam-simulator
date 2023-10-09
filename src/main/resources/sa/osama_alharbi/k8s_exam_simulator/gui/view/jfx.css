@@ -1,6 +1,6 @@
 // pane
 .main{
-    -fx-background-color: #1A1C28;
+    -fx-background-color: #161B22;
 }
 
 // button
@@ -88,7 +88,7 @@
 // listview
 .list-view {
     -fx-background-radius: 25 25 0 0;
-    -fx-background-color: #1A1C28;
+    -fx-background-color: #161B22;
     -fx-padding: 10 10 0 10;
     -fx-selection-bar:green ;
 }
@@ -99,8 +99,8 @@
     -fx-background-color: #6A6C68;
 }
 .list-view .list-cell:odd {
-    -fx-background-color: #1A1C28;
+    -fx-background-color: #161B22;
 }
 .list-view .list-cell:even {
-    -fx-background-color: #1A1C28;;
+    -fx-background-color: #161B22;;
 }
