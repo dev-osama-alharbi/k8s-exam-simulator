@@ -24,7 +24,7 @@ public class Q3Exam extends Exam {
         title = "ReadinessProbe";
 
         namespace = K8sConstant.NAMESPACE_PREFIX+"readiness-probe";
-        String podName = "pod-readiness-probe";
+        String podName = "readiness-probe";
         String imageName = "busybox:1.36.1";
         List<String> readinessProbeCommands = new ArrayList<>();
         readinessProbeCommands.add("sh");

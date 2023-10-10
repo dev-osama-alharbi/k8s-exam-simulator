@@ -92,7 +92,7 @@ public class Q5Exam extends Exam {
                 CoreV1Api api = new CoreV1Api();
                 try {
                     V1Secret v1Secret = api.readNamespacedSecret(secret1Name,namespace,null);
-                    return v1Secret.getStringData().containsKey("user");
+                    return v1Secret.getData().containsKey("user") || v1Secret.getStringData().containsKey("user");
                 } catch (Exception e) {
                     return false;
                 }
@@ -106,7 +106,7 @@ public class Q5Exam extends Exam {
                 CoreV1Api api = new CoreV1Api();
                 try {
                     V1Secret v1Secret = api.readNamespacedSecret(secret1Name,namespace,null);
-                    return v1Secret.getStringData().containsKey("pass");
+                    return v1Secret.getData().containsKey("pass") || v1Secret.getStringData().containsKey("pass");
                 } catch (Exception e) {
                     return false;
                 }
@@ -121,6 +121,13 @@ public class Q5Exam extends Exam {
                 try {
                     V1Pod v1Pod = api.readNamespacedPod(podName,namespace,null);
                     boolean isEnvOk = false;
+
+                    for (V1EnvVar v1EnvVar:v1Pod.getSpec().getContainers().get(0).getEnv()) {
+                        if(v1EnvVar.getValueFrom().getSecretKeyRef().getName().equals(secret1Name)){
+                            isEnvOk = true;
+                        }
+                    }
+
                     for (V1EnvFromSource v1EnvFromSource:v1Pod.getSpec().getContainers().get(0).getEnvFrom()) {
                         if(v1EnvFromSource.getSecretRef().getName().equals(secret1Name)){
                             isEnvOk = true;
