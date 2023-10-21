@@ -17,7 +17,7 @@ public class Q7Exam extends Exam {
         title = "initContainer";
 
         //TODO
-        namespace = K8sConstant.NAMESPACE_PREFIX+"initContainer";
+        namespace = K8sConstant.NAMESPACE_PREFIX+"init-container";
         String deployName = "my-website";
         String deploymentImageName = "nginx:1.25.2";
 
@@ -63,7 +63,7 @@ public class Q7Exam extends Exam {
             public boolean run() {
                 AppsV1Api api = new AppsV1Api();
                 try {
-                    V1Deployment v1Deployment = api.readNamespacedDeployment(deploymentImageName,namespace,null);
+                    V1Deployment v1Deployment = api.readNamespacedDeployment(deployName,namespace,null);
                     return v1Deployment.getSpec().getTemplate().getSpec().getContainers().get(0).getImage().equals(deploymentImageName);
                 } catch (Exception e) {
                     return false;
@@ -77,7 +77,7 @@ public class Q7Exam extends Exam {
             public boolean run() {
                 AppsV1Api api = new AppsV1Api();
                 try {
-                    V1Deployment v1Deployment = api.readNamespacedDeployment(deploymentImageName,namespace,null);
+                    V1Deployment v1Deployment = api.readNamespacedDeployment(deployName,namespace,null);
                     return v1Deployment.getSpec().getTemplate().getSpec().getInitContainers().get(0).getName().equals(initContainerName);
                 } catch (Exception e) {
                     return false;
@@ -91,7 +91,7 @@ public class Q7Exam extends Exam {
             public boolean run() {
                 AppsV1Api api = new AppsV1Api();
                 try {
-                    V1Deployment v1Deployment = api.readNamespacedDeployment(deploymentImageName,namespace,null);
+                    V1Deployment v1Deployment = api.readNamespacedDeployment(deployName,namespace,null);
                     return v1Deployment.getSpec().getTemplate().getSpec().getInitContainers().get(0).getImage().equals(initContainerImage);
                 } catch (Exception e) {
                     return false;
@@ -105,7 +105,7 @@ public class Q7Exam extends Exam {
             public boolean run() {
                 AppsV1Api api = new AppsV1Api();
                 try {
-                    V1Deployment v1Deployment = api.readNamespacedDeployment(deploymentImageName,namespace,null);
+                    V1Deployment v1Deployment = api.readNamespacedDeployment(deployName,namespace,null);
                     boolean isVolumesMountToDeploy = false;
                     boolean isVolumesMountToContainer = false;
                     boolean isVolumesMountToInitContainer = false;

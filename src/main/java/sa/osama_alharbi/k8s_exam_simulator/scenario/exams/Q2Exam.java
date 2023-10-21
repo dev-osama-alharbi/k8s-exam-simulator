@@ -33,7 +33,7 @@ public class Q2Exam extends Exam {
         int completeCount = 3;
         int parallelCount = 2;
         HashMap<String,String> labels = new HashMap<>();
-        labels.put("id","awesome-job");
+        labels.put("id","good-job");
 
         scenario.getQuestionModel().setTitle("job");
 
@@ -117,14 +117,15 @@ public class Q2Exam extends Exam {
                 BatchV1Api api = new BatchV1Api();
                 try {
                     V1Job v1Job = api.readNamespacedJob(jobName,namespace,null);
-                    boolean flag = true;
+                    boolean flag = false;
                     Map<String, String> jobLabels = v1Job.getSpec().getTemplate().getMetadata().getLabels();
-                    for (Map.Entry<String, String> ent:labels.entrySet())
-                        if(!jobLabels.containsKey(ent.getKey()))
-                            flag = false;
-                        else
-                        if(!jobLabels.get(ent.getKey()).equals(ent.getValue()))
-                            flag = false;
+                    for (Map.Entry<String, String> ent:labels.entrySet()){
+                        if(jobLabels.containsKey(ent.getKey())){
+                            if(jobLabels.get(ent.getKey()).equals(ent.getValue())){
+                                flag = true;
+                            }
+                        }
+                    }
 
                     return flag;
                 } catch (Exception e) {
